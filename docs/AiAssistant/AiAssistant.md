@@ -107,7 +107,16 @@ Người thực hiện: SE nắm dự án (người đã dự họp / cùng tạ
 
 ### 7.2. Hình ảnh và sơ đồ
 
-- **Ưu tiên diagram-as-text hơn ảnh nhúng.** Ảnh trong repo là tri thức chết: không diff được, AI không sửa được khi spec đổi, sẽ lặng lẽ outdate. Sơ đồ dạng text (Mermaid nhúng trong markdown, PlantUML, drawio) là tri thức sống.
+- **Ưu tiên diagram-as-text hơn ảnh nhúng.** Ảnh trong repo là tri thức chết: không diff được, AI không sửa được khi spec đổi, sẽ lặng lẽ outdate. Sơ đồ dạng text (Mermaid nhúng trong markdown, PlantUML) là tri thức sống.
+- **Chọn công cụ vẽ theo ba bậc** (lưu ý: Mermaid không vẽ được một số UML chuẩn — ví dụ activity diagram có swimlane/fork-join — nên không ép mọi thứ vào Mermaid):
+
+  | Tình huống | Công cụ |
+  |---|---|
+  | Mặc định (~80% nhu cầu): sequence, state, ER, flow đơn giản | **Mermaid** — render native trong GitHub / VSCode, không cần toolchain |
+  | Cần UML chuẩn mà Mermaid không diễn đạt được (activity diagram có swimlane, component, deployment) | **PlantUML** — vẫn là diagram-as-text, AI viết thạo; chấp nhận cài extension / server để render |
+  | Cần kiểm soát layout, sơ đồ vẽ tay của SE, hoặc hướng tới deliverable cho khách | **drawio** — lưu dạng `.drawio.svg` (ảnh SVG có nhúng source: vừa hiển thị trong markdown, vừa mở lại bằng drawio sửa tiếp được); luôn kèm bản mô tả text do AI trích xuất |
+
+- **Sự thật nằm ở text, sơ đồ là view.** Ngữ nghĩa chính xác của spec giữ ở text có cấu trúc (bảng, danh sách bước kèm người thực hiện, given-when-then…); sơ đồ để con người nắm nhanh. Khi sơ đồ và text lệch nhau — **text thắng**, và AI có trách nhiệm giữ hai bên đồng bộ. Nhờ tách vai này, giới hạn UML của Mermaid không còn nghiêm trọng: UML chuẩn chỉ bắt buộc khi khách hàng yêu cầu trong deliverable (ngoài phạm vi — xem mục 10).
 - Với hình trong tài liệu gốc: dùng AI **tái tạo** thành sơ đồ dễ hiểu hơn từ bản gốc (UML nhúng markdown, drawio; với UI có thể dùng công cụ như Google Stitch để chuyển thành prototype). Ảnh gốc giữ lại làm tham chiếu **cho đến khi** bản tái tạo được SE xác nhận; sau đó bản text là chính.
 - Những gì không đáng công tái tạo (ảnh whiteboard chụp một lần, mockup tham khảo) được phép sống dạng ảnh, nhưng phải ghi chú rõ: *tham khảo, không phải spec*.
 - AI hiện đọc tài liệu có hình khá tốt, nên hình ảnh không phải vấn đề cốt tử — nhưng quy tắc trên vẫn giữ để tài liệu **cập nhật được** về lâu dài.
@@ -131,6 +140,7 @@ Chỉ **SE nắm dự án** được quyền chuyển status sang `agreed-custom
 - Nội dung quan trọng hình thành trong hội thoại **phải được ghi ra docs trước khi kết thúc phiên** (quy tắc 3, mục 6).
 - Việc "nhớ ra cái gì quan trọng" cũng được đẩy một phần cho AI: instruction file (mục 8) quy định AI **chủ động đề nghị ghi lại** khi thấy một quyết định hình thành trong hội thoại ("điểm A, B vừa chốt chưa nằm trong docs, tôi ghi vào X nhé?").
 - Ưu tiên ghi **quyết định + bối cảnh + lý do** (dạng ADR gọn — vài dòng *bối cảnh → quyết định → hậu quả*), **câu hỏi chưa chốt**, và **ràng buộc từ khách hàng** — hơn là tái tạo bộ tài liệu truyền thống đồ sộ. Ở giai đoạn requirement/basic design, thứ khan hiếm là quyết định và lý do của nó, không phải chữ. **Ngắn mà đúng thắng dài mà mượt.**
+- **ADR là gì:** Architecture Decision Record — bản ghi quyết định, mỗi bản chỉ vài dòng cho **một quyết định khó đảo ngược**, gồm: *bối cảnh* (tình huống, ràng buộc lúc đó), *quyết định* (chọn phương án nào), *hậu quả* (được gì, mất gì, trade-off chấp nhận). Giá trị của nó là trả lời câu hỏi "vì sao hồi đó chọn thế này?" — thứ không ai nhớ sau vài tháng, và là thứ tài liệu thiết kế truyền thống thường bỏ qua (ghi *cái gì* nhưng không ghi *vì sao*). Với AI còn thêm một giá trị: khi AI đề xuất thay đổi, nó đọc được lý do cũ và biết ràng buộc nào vẫn còn hiệu lực. Trong tài liệu này, ADR dùng theo **nghĩa rộng**: không chỉ quyết định kiến trúc mà cả quyết định về spec với khách hàng (ví dụ: "khách chốt bỏ tính năng Y vì ngân sách").
 
 ### 7.5. Bảo mật
 
