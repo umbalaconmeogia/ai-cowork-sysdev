@@ -161,6 +161,7 @@ Toàn bộ độ phức tạp về cơ cấu tài liệu được dồn vào đ�
 - **`AGENTS.md` là file gốc** — chuẩn mở, trung lập về công cụ, được nhiều AI tool đọc trực tiếp.
 - File riêng của từng tool (`CLAUDE.md` cho Claude Code, rule file của Cursor…) **chỉ là file trỏ đến / include `AGENTS.md`**, không chứa nội dung riêng.
 - Lý do chọn chuẩn trung lập: team đang trong quá trình chuyển đổi công cụ (Cursor → Claude Code) và có thể còn đổi tiếp; nội dung quy tắc phải sống lâu hơn lựa chọn công cụ.
+- **Quy tắc cũng theo index-first như tài liệu:** `AGENTS.md` root giữ tinh gọn (nguyên tắc chung + hành vi mọi ngữ cảnh + **bản đồ quy tắc**); quy tắc riêng của từng vùng đặt trong `AGENTS.md` của thư mục đó (ví dụ `docs/SystemDesign/AGENTS.md`), root chỉ trỏ đến. Lý do: root được nạp vào mọi phiên làm việc — dồn hết quy tắc vào đó là bắt mọi phiên trả token cho luật không liên quan; tách theo vùng thì thêm vùng luật mới (coding, test, ops…) không làm phình root. Luật an toàn tuyệt đối (cấm tự sửa `agreed-customer`) vẫn giữ bản tóm tắt ở root để không phụ thuộc việc nạp file con.
 
 Nhờ nằm trong repo, **ai mở repo bằng AI assistant nào cũng bị đưa vào cùng một nề nếp** — không phụ thuộc người đó có dự buổi chia sẻ hay không. Đây chính là lời giải cho vấn đề 3.1.
 
