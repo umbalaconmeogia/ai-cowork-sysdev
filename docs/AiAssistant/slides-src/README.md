@@ -1,6 +1,11 @@
 # Nguồn sinh file AiAssistant-team-intro.pptx
 
-File [`../AiAssistant-team-intro.pptx`](../AiAssistant-team-intro.pptx) là **sản phẩm sinh ra** từ script trong thư mục này. Source of truth là `gen_slides.js` — **không sửa trực tiếp file pptx**.
+Các file pptx trong `docs/AiAssistant/` là **sản phẩm sinh ra** từ script trong thư mục này — **không sửa trực tiếp file pptx**:
+
+| File pptx | Script nguồn | Ghi chú |
+|---|---|---|
+| [`../AiAssistant-team-intro.pptx`](../AiAssistant-team-intro.pptx) | `gen_slides.js` | Bản gốc tiếng Việt |
+| [`../AiAssistant-team-intro.ja.pptx`](../AiAssistant-team-intro.ja.pptx) | `gen_slides.ja.js` | Bản dịch tiếng Nhật (font Yu Gothic); cùng layout, chỉ khác nội dung chữ. **Khi sửa nội dung bản gốc, phải sửa tương ứng bản dịch** (hoặc hỏi người dùng có cần đồng bộ không) |
 
 ## Chỉ dẫn cho AI assistant
 

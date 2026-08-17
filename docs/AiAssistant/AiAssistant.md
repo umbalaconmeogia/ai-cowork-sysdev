@@ -69,6 +69,12 @@ Không chống lại thực tế: **chấp nhận** tài liệu làm việc cấ
 | Vai trò | **Bề mặt giao tiếp/đàm phán** với khách hàng và cấp cao | **Source of truth duy nhất** của team |
 | Tính chất | Đầu vào **nhất thời** (ephemeral input): đọc xong, rút tri thức, xong vai trò | Tri thức **sống**, được AI và mọi thành viên truy cập, cập nhật |
 | Ai duy trì | Khách hàng / leader / SE theo thói quen của họ | AI ghi, SE kiểm soát |
+| Cách tạo / sửa | **SE tự tay là chính**; thi thoảng nhờ AI khi có lợi | **Bàn luận với AI** rồi yêu cầu AI update; SE hiếm khi sửa tay |
+
+**Ai cầm bút ở mỗi tầng** (nhấn mạnh cho SE nắm dự án):
+
+- **File làm việc với khách hàng (Drive):** SE tự tạo, tự update bằng tay là chính — đó là bề mặt làm việc trực tiếp với khách. Vẫn nên nhờ AI khi có lợi: ví dụ cần thêm một bảng thật lớn liệt kê danh sách màn hình vào spreadsheet, có thể nhờ AI sinh file xlsx rồi nhúng vào, hoặc cấp quyền cho AI sửa trực tiếp file. Dù ai tạo, sản phẩm ở tầng này vẫn là đầu vào nhất thời — nghi thức chuyển đổi vào repo (mục 7.1) không thay đổi.
+- **File trên repo:** SE có thể tự sửa, nhưng **hiếm khi nên làm vậy**. Cách làm mặc định: bàn luận với AI, cung cấp thông tin cần thiết, rồi chốt bằng yêu cầu *"hãy update nội dung vào các tài liệu cần thiết"* — AI tìm đúng chỗ theo cơ cấu docs, sửa, cập nhật mục lục/liên kết chéo; SE review diff. Lý do không chỉ là tiết kiệm công: sửa tay **đi vòng qua phần bookkeeping của AI** (mục lục, liên kết, vị trí lưu) khiến cơ cấu tài liệu lặng lẽ lệch đi. Sửa tay vài chữ nhỏ vẫn hợp lệ — đây là mặc định, không phải lệnh cấm.
 
 **Ngôn ngữ:** tài liệu trong repo viết bằng **tiếng Việt**. (Bản dịch sang ngôn ngữ khác, nếu cần, sẽ có quy ước riêng sau.)
 
@@ -167,7 +173,7 @@ Nội dung chính của instruction file:
 5. **Chủ động đề nghị ghi lại quyết định** khi thấy quyết định hình thành trong hội thoại.
 6. **Sơ đồ bằng diagram-as-text** (Mermaid ưu tiên); không tạo ảnh nhúng cho nội dung spec.
 7. **Tôn trọng dòng status** (mục 7.3): file `agreed-customer` không được sửa nội dung nếu không có chỉ thị rõ ràng của con người; khi sửa phải nhắc người dùng rằng đây là nội dung đã chốt với khách hàng.
-8. **Ghi changelog gọn** ở cuối file khi cập nhật, để người review liếc qua là biết vừa thay đổi gì.
+8. **Ghi changelog gọn** ở cuối file khi cập nhật, để người review liếc qua là biết vừa thay đổi gì — nhưng **theo mốc quan trọng, không phải theo từng lần sửa**. Lịch sử/changelog trong tài liệu là bản ghi đánh dấu thay đổi đáng kể về nội dung hoặc quyết định (đổi một quy tắc, thêm/bỏ một mục lớn, hoàn tất một phiên bản); log chi tiết từng thay đổi đã có git đảm nhiệm — ghi cả hai nơi là thừa. AI không tự thêm dòng lịch sử cho các chỉnh sửa nhỏ (câu chữ, bổ sung lặt vặt).
 
 *(Instruction file mẫu cụ thể sẽ được soạn riêng — xem mục 10.)*
 
@@ -198,6 +204,8 @@ Nội dung chính của instruction file:
 ---
 
 ## Lịch sử chỉnh sửa
+
+Chỉ ghi **mốc thay đổi quan trọng** của tài liệu (đổi quy tắc, thêm/bỏ mục lớn, hoàn tất phiên bản) — không ghi mọi lần sửa file; log chi tiết đã có git.
 
 | Ngày | Thay đổi |
 |------|----------|

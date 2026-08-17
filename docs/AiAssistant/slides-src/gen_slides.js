@@ -206,9 +206,9 @@ function shadow() {
     s.addText("Google Drive", { x: 1.68, y: y + 0.36, w: 3.6, h: 0.5, fontFace: HEAD, fontSize: 19, bold: true, color: NAVY, margin: 0 });
     bullets(s, [
       "Bề mặt giao tiếp / đàm phán với khách hàng và cấp cao",
+      "SE tự tay tạo / update là chính — thi thoảng nhờ AI (sinh bảng lớn thành xlsx, sửa trực tiếp)",
       "Đầu vào nhất thời: đọc xong, rút tri thức, xong vai trò",
-      "Khách hàng / leader duy trì theo thói quen của họ",
-    ], 0.95, y + 1.1, w - 0.65, h - 1.3, { size: 13.5 });
+    ], 0.95, y + 1.1, w - 0.65, h - 1.3, { size: 12.5, gap: 6 });
 
     // arrow
     s.addShape("chevron", { x: 6.12, y: y + 1.25, w: 1.05, h: 0.8, fill: { color: MINT }, line: { type: "none" } });
@@ -221,8 +221,8 @@ function shadow() {
     bullets(s, [
       "Source of truth duy nhất của team",
       "Tri thức sống: AI và mọi thành viên truy cập, cập nhật",
-      "AI ghi — SE kiểm soát",
-    ], 7.73, y + 1.1, w - 0.65, h - 1.3, { size: 13.5, color: ICE });
+      "AI ghi — SE hiếm khi sửa tay: bàn luận với AI rồi yêu cầu “update vào các tài liệu cần thiết”, SE review diff",
+    ], 7.73, y + 1.1, w - 0.65, h - 1.3, { size: 12.5, gap: 6, color: ICE });
 
     // key callout
     card(s, 0.6, 5.45, 12.13, 1.35, NAVY);
@@ -231,7 +231,7 @@ function shadow() {
       { text: "Đơn vị đưa vào repo là “nội dung đã chốt trong buổi làm việc”, không phải “bản sao của file”. File Drive sửa tiếp? — đó là một sự kiện mới, kích hoạt một lần chuyển đổi mới. Không cần cơ chế theo dõi Drive.", options: { color: WHITE } },
     ], { x: 0.95, y: 5.62, w: 11.45, h: 1.05, fontFace: BODY, fontSize: 14, valign: "middle", margin: 0, lineSpacingMultiple: 1.1 });
 
-    s.addNotes("Không chống lại thực tế: Drive vẫn là nơi làm việc với khách hàng. Nhưng vai trò được phân định — Drive là bề mặt giao tiếp, repo là nguồn sự thật duy nhất. Điểm mấu chốt ở callout: chuyển đổi theo sự kiện giải quyết luôn bài toán 'file Drive bị sửa sau khi đã chuyển đổi'.");
+    s.addNotes("Không chống lại thực tế: Drive vẫn là nơi làm việc với khách hàng. Nhưng vai trò được phân định — Drive là bề mặt giao tiếp, repo là nguồn sự thật duy nhất. Nhấn mạnh 'ai cầm bút': trên Drive SE tự tay là chính (thi thoảng nhờ AI); trên repo thì ngược lại — bàn với AI rồi bảo nó update, hiếm khi sửa tay, vì sửa tay đi vòng qua phần bookkeeping của AI (mục lục, liên kết chéo) khiến cơ cấu lặng lẽ lệch. Điểm mấu chốt ở callout: chuyển đổi theo sự kiện giải quyết luôn bài toán 'file Drive bị sửa sau khi đã chuyển đổi'.");
   }
 
   // ============================================================ S5 five rules (dark)
