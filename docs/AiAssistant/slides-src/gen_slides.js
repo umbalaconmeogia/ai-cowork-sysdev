@@ -376,21 +376,33 @@ function shadow() {
   {
     const s = pres.addSlide();
     s.background = { color: WHITE };
-    titleBar(s, "Phần của AI — instruction file trong repo", { kicker: "AGENTS.MD" });
+    titleBar(s, "Phần của AI — instruction file trong repo", { kicker: "INSTRUCTION FILE" });
 
-    // left diagram
-    const dx = 0.6;
-    s.addShape("roundRect", { x: dx + 0.55, y: 2.1, w: 3.4, h: 1.25, rectRadius: 0.08, fill: { color: NAVY }, line: { type: "none" }, shadow: shadow() });
-    s.addText("AGENTS.md", { x: dx + 0.55, y: 2.28, w: 3.4, h: 0.5, align: "center", fontFace: MONO, fontSize: 17, bold: true, color: WHITE, margin: 0 });
-    s.addText("file gốc duy nhất", { x: dx + 0.55, y: 2.78, w: 3.4, h: 0.4, align: "center", fontFace: BODY, fontSize: 11.5, color: ICE, margin: 0 });
-
-    const sub = [ ["CLAUDE.md", dx, 4.35], [".cursor/rules", dx + 2.35, 4.35] ];
-    sub.forEach(([t, x, yy]) => {
-      s.addShape("roundRect", { x, y: yy, w: 2.2, h: 0.75, rectRadius: 0.07, fill: { color: ICE_BG }, line: { color: ICE, width: 1 } });
-      s.addText(t + "  →", { x, y: yy, w: 2.2, h: 0.75, align: "center", valign: "middle", fontFace: MONO, fontSize: 12.5, color: NAVY, margin: 0 });
-      s.addShape("line", { x: x + 1.1, y: 3.35, w: Math.max(0.05, (dx + 2.25) - (x + 1.1)), h: 1.0, line: { color: MUTED, width: 1.5, endArrowType: "arrow" }, flipV: true });
+    // left diagram — chuỗi nạp 4 tầng
+    const dx = 0.6, dw = 4.9;
+    const ptr = [ ["CLAUDE.md", dx], [".cursor/rules", dx + 2.5] ];
+    ptr.forEach(([t, x]) => {
+      s.addShape("roundRect", { x, y: 1.9, w: 2.4, h: 0.55, rectRadius: 0.07, fill: { color: ICE_BG }, line: { color: ICE, width: 1 } });
+      s.addText(t, { x, y: 1.9, w: 2.4, h: 0.55, align: "center", valign: "middle", fontFace: MONO, fontSize: 11.5, color: NAVY, margin: 0 });
     });
-    s.addText("File của từng tool chỉ trỏ đến AGENTS.md.\nNội dung quy tắc sống lâu hơn lựa chọn công cụ\n(Cursor → Claude Code → …)", { x: dx, y: 5.35, w: 4.7, h: 1.3, fontFace: BODY, fontSize: 12, italic: true, color: MUTED, margin: 0, lineSpacingMultiple: 1.15 });
+    s.addShape("line", { x: dx + dw / 2, y: 2.45, w: 0, h: 0.28, line: { color: MUTED, width: 1.5, endArrowType: "arrow" } });
+    const chain = [
+      ["AGENTS.md", "file gốc CỦA DỰ ÁN — luật riêng + 1 dòng link", ICE, NAVY, NAVY],
+      ["AGENTS-SystemDesign.md", "adapter — 3 hành vi luôn trực chiến", MINT, NAVY, NAVY],
+      ["docs/SystemDesign/AGENTS.md", "toàn bộ luật vùng tài liệu — nạp khi cần", NAVY, WHITE, ICE],
+    ];
+    let cy = 2.73;
+    chain.forEach(([name, role, fill, c1, c2], i) => {
+      s.addShape("roundRect", { x: dx, y: cy, w: dw, h: 0.92, rectRadius: 0.08, fill: { color: fill }, line: { type: "none" }, shadow: shadow() });
+      s.addText(name, { x: dx, y: cy + 0.12, w: dw, h: 0.42, align: "center", fontFace: MONO, fontSize: 13, bold: true, color: c1, margin: 0 });
+      s.addText(role, { x: dx, y: cy + 0.53, w: dw, h: 0.34, align: "center", fontFace: BODY, fontSize: 10.5, color: c2, margin: 0 });
+      cy += 0.92;
+      if (i < chain.length - 1) {
+        s.addShape("line", { x: dx + dw / 2, y: cy, w: 0, h: 0.26, line: { color: MUTED, width: 1.5, endArrowType: "arrow" } });
+        cy += 0.26;
+      }
+    });
+    s.addText("Bộ quy tắc của ta = 2 file dưới cùng — nâng cấp chỉ copy đè, không đụng luật riêng của dự án. Nội dung quy tắc sống lâu hơn lựa chọn công cụ.", { x: dx, y: cy + 0.15, w: dw, h: 0.85, fontFace: BODY, fontSize: 11.5, italic: true, color: MUTED, margin: 0, lineSpacingMultiple: 1.12 });
 
     // right list
     const rx = 6.0, rw = 6.7;
@@ -407,7 +419,7 @@ function shadow() {
     card(s, rx, 5.85, rw, 0.95, NAVY);
     s.addText("Ai mở repo bằng AI assistant nào cũng vào cùng một nề nếp — lời giải cho “mỗi người một kiểu”.", { x: rx + 0.3, y: 5.85, w: rw - 0.6, h: 0.95, fontFace: BODY, fontSize: 13, bold: true, color: WHITE, valign: "middle", margin: 0, lineSpacingMultiple: 1.1 });
 
-    s.addNotes("Toàn bộ độ phức tạp về cơ cấu tài liệu nằm ở đây — con người không phải nhớ. AGENTS.md là chuẩn mở trung lập; ta đang chuyển Cursor → Claude Code và có thể còn đổi tiếp, nên quy tắc phải sống lâu hơn công cụ. Quy ước nằm trong repo nên tự áp dụng cho mọi người, không phụ thuộc ai dự buổi chia sẻ nào.");
+    s.addNotes("Chuỗi nạp: con trỏ của tool (CLAUDE.md / .cursor/rules) → AGENTS.md của dự án → adapter AGENTS-SystemDesign.md (chỉ 3 hành vi luôn trực chiến: trigger vào vùng docs, đề nghị ghi quyết định, chốt an toàn agreed-customer) → luật vùng docs/SystemDesign/AGENTS.md, nạp khi cần. Bộ của ta là 2 file cuối, gắn vào AGENTS.md có sẵn của dự án bằng 1 dòng link — không trộn nội dung, nâng cấp chỉ copy đè. Quy ước nằm trong repo nên tự áp dụng cho mọi người, không phụ thuộc ai dự buổi chia sẻ nào.");
   }
 
   // ============================================================ S10 risks

@@ -366,20 +366,33 @@ function shadow() {
   {
     const s = pres.addSlide();
     s.background = { color: WHITE };
-    titleBar(s, "AI側のルール — リポジトリ内のinstruction file", { kicker: "AGENTS.MD" });
+    titleBar(s, "AI側のルール — リポジトリ内のinstruction file", { kicker: "INSTRUCTION FILE" });
 
-    const dx = 0.6;
-    s.addShape("roundRect", { x: dx + 0.55, y: 2.1, w: 3.4, h: 1.25, rectRadius: 0.08, fill: { color: NAVY }, line: { type: "none" }, shadow: shadow() });
-    s.addText("AGENTS.md", { x: dx + 0.55, y: 2.28, w: 3.4, h: 0.5, align: "center", fontFace: MONO, fontSize: 17, bold: true, color: WHITE, margin: 0 });
-    s.addText("唯一のマスター", { x: dx + 0.55, y: 2.78, w: 3.4, h: 0.4, align: "center", fontFace: BODY, fontSize: 11.5, color: ICE, margin: 0 });
-
-    const sub = [ ["CLAUDE.md", dx, 4.35], [".cursor/rules", dx + 2.35, 4.35] ];
-    sub.forEach(([t, x, yy]) => {
-      s.addShape("roundRect", { x, y: yy, w: 2.2, h: 0.75, rectRadius: 0.07, fill: { color: ICE_BG }, line: { color: ICE, width: 1 } });
-      s.addText(t + "  →", { x, y: yy, w: 2.2, h: 0.75, align: "center", valign: "middle", fontFace: MONO, fontSize: 12.5, color: NAVY, margin: 0 });
-      s.addShape("line", { x: x + 1.1, y: 3.35, w: Math.max(0.05, (dx + 2.25) - (x + 1.1)), h: 1.0, line: { color: MUTED, width: 1.5, endArrowType: "arrow" }, flipV: true });
+    // 読み込みチェーン（4層）
+    const dx = 0.6, dw = 4.9;
+    const ptr = [ ["CLAUDE.md", dx], [".cursor/rules", dx + 2.5] ];
+    ptr.forEach(([t, x]) => {
+      s.addShape("roundRect", { x, y: 1.9, w: 2.4, h: 0.55, rectRadius: 0.07, fill: { color: ICE_BG }, line: { color: ICE, width: 1 } });
+      s.addText(t, { x, y: 1.9, w: 2.4, h: 0.55, align: "center", valign: "middle", fontFace: MONO, fontSize: 11.5, color: NAVY, margin: 0 });
     });
-    s.addText("各ツールのファイルはAGENTS.mdを指すだけ。\nルールの内容はツール選択より長生きする\n(Cursor → Claude Code → …)", { x: dx, y: 5.35, w: 4.7, h: 1.3, fontFace: BODY, fontSize: 12, italic: true, color: MUTED, margin: 0, lineSpacingMultiple: 1.15 });
+    s.addShape("line", { x: dx + dw / 2, y: 2.45, w: 0, h: 0.28, line: { color: MUTED, width: 1.5, endArrowType: "arrow" } });
+    const chain = [
+      ["AGENTS.md", "プロジェクト自身のルート — 固有ルール + リンク1行", ICE, NAVY, NAVY],
+      ["AGENTS-SystemDesign.md", "アダプタ — 常時有効の3つの行動", MINT, NAVY, NAVY],
+      ["docs/SystemDesign/AGENTS.md", "設計ドキュメント領域の全ルール — 必要時に読込", NAVY, WHITE, ICE],
+    ];
+    let cy = 2.73;
+    chain.forEach(([name, role, fill, c1, c2], i) => {
+      s.addShape("roundRect", { x: dx, y: cy, w: dw, h: 0.92, rectRadius: 0.08, fill: { color: fill }, line: { type: "none" }, shadow: shadow() });
+      s.addText(name, { x: dx, y: cy + 0.12, w: dw, h: 0.42, align: "center", fontFace: MONO, fontSize: 13, bold: true, color: c1, margin: 0 });
+      s.addText(role, { x: dx, y: cy + 0.53, w: dw, h: 0.34, align: "center", fontFace: BODY, fontSize: 10.5, color: c2, margin: 0 });
+      cy += 0.92;
+      if (i < chain.length - 1) {
+        s.addShape("line", { x: dx + dw / 2, y: cy, w: 0, h: 0.26, line: { color: MUTED, width: 1.5, endArrowType: "arrow" } });
+        cy += 0.26;
+      }
+    });
+    s.addText("我々のルールセットは下の2ファイル — 更新は上書きコピーのみで、プロジェクト固有ルールには触れない。ルールの内容はツール選択より長生きする。", { x: dx, y: cy + 0.15, w: dw, h: 0.85, fontFace: BODY, fontSize: 11, italic: true, color: MUTED, margin: 0, lineSpacingMultiple: 1.12 });
 
     const rx = 6.0, rw = 6.7;
     s.addText("AIに義務付けること：", { x: rx, y: 1.85, w: rw, h: 0.45, fontFace: HEAD, fontSize: 17, bold: true, color: NAVY, margin: 0 });
@@ -395,7 +408,7 @@ function shadow() {
     card(s, rx, 5.85, rw, 0.95, NAVY);
     s.addText("どのAIアシスタントでリポジトリを開いても、同じ規律に入る — 「人それぞれ」問題への解答。", { x: rx + 0.3, y: 5.85, w: rw - 0.6, h: 0.95, fontFace: BODY, fontSize: 13, bold: true, color: WHITE, valign: "middle", margin: 0, lineSpacingMultiple: 1.1 });
 
-    s.addNotes("ドキュメント構成の複雑さはすべてここに集約 — 人間は覚えなくてよい。AGENTS.mdはツール中立のオープン標準；現在Cursor→Claude Codeへ移行中で今後も変わり得るため、ルールはツールより長生きさせる。規約はリポジトリ内にあるので、共有会に出たかどうかに関係なく全員に自動適用される。");
+    s.addNotes("読み込みの連鎖：ツールのポインタ（CLAUDE.md / .cursor/rules）→ プロジェクト自身のAGENTS.md → アダプタAGENTS-SystemDesign.md（常時有効の3行動のみ：docs領域へのトリガー、決定の記録提案、agreed-customer安全弁）→ 領域ルールdocs/SystemDesign/AGENTS.md（必要時に読込）。我々のセットは最後の2ファイルで、プロジェクトの既存AGENTS.mdにはリンク1行を追加するだけ — 内容は混ぜず、更新は上書きコピーのみ。規約はリポジトリ内にあるので、共有会に出たかどうかに関係なく全員に自動適用される。");
   }
 
   // ============================================================ S10 risks
