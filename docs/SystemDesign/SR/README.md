@@ -4,6 +4,27 @@
 
 Hệ thống đặt phòng họp nội bộ, thay thế quy trình đặt qua bảng Excel chung. Người dùng là toàn bộ nhân viên; quản trị bởi bộ phận Tổng vụ (GA). Khách hàng (bộ phận GA) đã chốt danh sách yêu cầu chức năng ngày 2026-08-10.
 
+## Luồng nghiệp vụ chính
+
+Sơ đồ định hướng — chi tiết từng yêu cầu xem [SR-01](SR-01-FunctionalRequirements.md) (spec chính thức là text):
+
+```mermaid
+flowchart TD
+    A["Nhân viên: xem lịch phòng trống (FR-01)"] --> B["Đặt phòng (FR-02)"]
+    B --> C{"Phòng đặc biệt?"}
+    C -- "Không" --> D["Booking confirmed ngay"]
+    C -- "Có" --> P["Booking pending — giữ khung giờ (FR-04)"]
+    P --> G{"GA duyệt?"}
+    G -- "Duyệt" --> D
+    G -- "Từ chối, kèm lý do" --> R["Booking rejected"]
+    D --> H["Hủy được trước giờ họp ≥ 15 phút (FR-03)"]
+    D --> N["Thông báo email + Slack (FR-05, FR-08)"]
+    R --> N
+    H --> N
+```
+
+Ngoài luồng chính: GA quản lý danh mục phòng (FR-06) và xem báo cáo tỷ lệ sử dụng hằng tháng (FR-07).
+
 ## Thuật ngữ
 
 | Thuật ngữ | Nghĩa |
