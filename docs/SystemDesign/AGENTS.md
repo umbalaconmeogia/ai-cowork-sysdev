@@ -85,8 +85,12 @@ Mỗi file spec có một dòng status ở đầu file:
 - **Không tự ý sửa nội dung file `agreed-customer`.** Khi được yêu cầu sửa, phải nhắc người dùng rằng đây là nội dung đã chốt với khách hàng và chờ xác nhận rõ ràng.
 - Việc chuyển status là quyết định của con người (riêng `agreed-customer` chỉ SE nắm dự án được chuyển) — AI chỉ cập nhật dòng status khi được chỉ thị.
 
-## 9. Định dạng markdown
+## 9. Định dạng markdown và tính dễ nắm bắt cho người đọc
+
+Tài liệu là AI-first, nhưng người đọc (SE khác, dev, reviewer) phải **nắm bắt nhanh** được — chất lượng review của cả mô hình phụ thuộc vào điều này.
 
 - Mỗi file bắt đầu bằng heading cấp 1 (`#`), tự đứng được một mình khi đọc riêng.
+- **Phần đầu file, khi có thể, phục vụ con người nắm nhanh:** một đoạn **overview** ngắn (nội dung gì, phạm vi nào), và khi sơ đồ giúp định hướng thì thêm **sơ đồ Mermaid** ngay sau overview. Không phải file nào cũng cần — mức khuyến nghị: file **SR** nên có sơ đồ luồng nghiệp vụ chính; file **BD** tùy tình hình (cấu trúc user, phân quyền, kiến trúc…). Sơ đồ đã vẽ khi kiểm tra ngược (mục 5) giữ lại làm sơ đồ định hướng — không tốn thêm công.
+- Sơ đồ định hướng vẫn theo nguyên tắc *"sự thật nằm ở text, sơ đồ là view"* (mục 1): khi sửa nội dung, AI phải giữ sơ đồ đồng bộ.
 - Heading dùng phân cấp nhất quán (`##`, `###`), không nhảy cấp.
 - Khi cần deliverable hợp nhất (PDF/DOCX), dùng công cụ (pandoc…) ghép các file — không sửa tay bản xuất; markdown luôn là bản gốc.

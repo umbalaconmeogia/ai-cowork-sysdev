@@ -6,7 +6,7 @@ Tài liệu **sống**: bản đầy đủ (định nghĩa vấn đề, nguyên 
 
 ## 1. Mục đích và phạm vi
 
-Đưa ra **một cách làm việc với AI đủ đơn giản để hiểu và áp dụng ngay** cho công việc định hình specification của hệ thống (từ requirement đến basic design). Đây **không phải** một quy trình phát triển phần mềm hoàn chỉnh — nhưng được thiết kế đủ hợp lý để về sau trở thành một phần của quy trình chung của team (xem [DevProcess.md](DevProcess.md)).
+Đưa ra **một cách làm việc với AI đủ đơn giản để hiểu và áp dụng ngay** cho công việc định hình specification của hệ thống (từ requirement đến basic design). Đây **không phải** một quy trình phát triển phần mềm hoàn chỉnh — nhưng được thiết kế đủ hợp lý để về sau trở thành một phần của quy trình chung của team (xem [DevProcess.md](../DevProcess.md)).
 
 **Phạm vi giai đoạn:** hiểu vấn đề → mô tả yêu cầu → thiết kế cơ bản. Các giai đoạn sau (thiết kế chi tiết, coding, test) không nằm trong phạm vi tài liệu này, dù tài liệu do giai đoạn này sinh ra chính là đầu vào cho chúng.
 

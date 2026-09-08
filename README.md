@@ -18,6 +18,19 @@ Rồi **nối vào hệ luật có sẵn của dự án** — thêm 1 dòng vào
 
 > Đọc và tuân theo [AGENTS-SystemDesign.md](AGENTS-SystemDesign.md).
 
+Chuỗi nạp khi AI mở repo:
+
+```mermaid
+flowchart TD
+    P1["CLAUDE.md<br/><i>(Claude Code)</i>"] --> A
+    P2[".cursor/rules/agents.mdc<br/><i>(Cursor)</i>"] --> A
+    A["<b>AGENTS.md</b><br/>file gốc CỦA DỰ ÁN — luật riêng + 1 dòng link"] --> B
+    subgraph OUR["Bộ quy tắc copy từ repo này"]
+        B["<b>AGENTS-SystemDesign.md</b><br/>adapter — 3 hành vi luôn trực chiến"] --> C
+        C["<b>docs/SystemDesign/AGENTS.md</b><br/>toàn bộ luật vùng tài liệu — nạp khi cần"]
+    end
+```
+
 Tên file `AGENTS-SystemDesign.md` cố ý khác `AGENTS.md` để không đụng file sẵn có của dự án; nâng cấp quy ước sau này chỉ là copy đè 2 file, không đụng vào luật riêng của dự án.
 
 Dự án **chưa có** instruction file nào? — copy thêm [AGENTS.md](AGENTS.md) cùng các file con trỏ cho tool bạn dùng: [CLAUDE.md](CLAUDE.md) (Claude Code), [.cursor/rules/agents.mdc](.cursor/rules/agents.mdc) (Cursor).
