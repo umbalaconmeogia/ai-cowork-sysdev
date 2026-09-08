@@ -158,10 +158,9 @@ Khi đưa tài liệu của khách hàng vào AI tool, chỉ dùng **AI tool đ�
 
 Toàn bộ độ phức tạp về cơ cấu tài liệu được dồn vào đây, để con người không phải nhớ. Các quy tắc này được viết vào instruction file của repo, với quy ước chuẩn hóa:
 
-- **`AGENTS.md` là file gốc** — chuẩn mở, trung lập về công cụ, được nhiều AI tool đọc trực tiếp.
-- File riêng của từng tool (`CLAUDE.md` cho Claude Code, rule file của Cursor…) **chỉ là file trỏ đến / include `AGENTS.md`**, không chứa nội dung riêng.
-- Lý do chọn chuẩn trung lập: team đang trong quá trình chuyển đổi công cụ (Cursor → Claude Code) và có thể còn đổi tiếp; nội dung quy tắc phải sống lâu hơn lựa chọn công cụ.
-- **Quy tắc cũng theo index-first như tài liệu:** `AGENTS.md` root giữ tinh gọn (nguyên tắc chung + hành vi mọi ngữ cảnh + **bản đồ quy tắc**); quy tắc riêng của từng vùng đặt trong `AGENTS.md` của thư mục đó (ví dụ `docs/SystemDesign/AGENTS.md`), root chỉ trỏ đến. Lý do: root được nạp vào mọi phiên làm việc — dồn hết quy tắc vào đó là bắt mọi phiên trả token cho luật không liên quan; tách theo vùng thì thêm vùng luật mới (coding, test, ops…) không làm phình root. Luật an toàn tuyệt đối (cấm tự sửa `agreed-customer`) vẫn giữ bản tóm tắt ở root để không phụ thuộc việc nạp file con.
+- **Dùng chuẩn `AGENTS.md` mở, trung lập về công cụ** — được nhiều AI tool đọc trực tiếp. File riêng của từng tool (`CLAUDE.md` cho Claude Code, rule file của Cursor…) **chỉ là con trỏ**, không chứa nội dung riêng. Lý do: team đang trong quá trình chuyển đổi công cụ (Cursor → Claude Code) và có thể còn đổi tiếp; nội dung quy tắc phải sống lâu hơn lựa chọn công cụ.
+- **Đóng gói thành bộ 2 file, gắn vào hệ luật có sẵn của dự án.** Dự án thường đã có `AGENTS.md` riêng (luật coding, build…) — không trộn nội dung vào đó. Bộ quy tắc gồm: **`AGENTS-SystemDesign.md`** ở root (adapter — tên riêng để không trùng file của dự án) và **`docs/SystemDesign/AGENTS.md`** (toàn bộ quy tắc vùng tài liệu, tự đứng trọn vẹn). `AGENTS.md` của dự án chỉ cần **một dòng link** tới adapter. Ranh giới sở hữu rõ: nâng cấp quy ước = copy đè 2 file của ta, không đụng luật riêng của dự án.
+- **Adapter chỉ giữ hành vi phải luôn trực chiến** (được nạp vào mọi phiên, kể cả phiên code): (1) trigger — tri thức spec sống ở `docs/SystemDesign/`, trước khi làm việc trong đó phải đọc luật vùng; (2) chủ động đề nghị ghi quyết định — vì quyết định hay hình thành trong phiên code, ngoài vùng docs; (3) chốt an toàn cấm tự sửa `agreed-customer`. Mọi quy tắc còn lại nằm trong file vùng, nạp khi cần — cùng nguyên lý index-first như tài liệu: không bắt mọi phiên trả token cho luật không liên quan.
 
 Nhờ nằm trong repo, **ai mở repo bằng AI assistant nào cũng bị đưa vào cùng một nề nếp** — không phụ thuộc người đó có dự buổi chia sẻ hay không. Đây chính là lời giải cho vấn đề 3.1.
 
@@ -176,7 +175,7 @@ Nội dung chính của instruction file:
 7. **Tôn trọng dòng status** (mục 7.3): file `agreed-customer` không được sửa nội dung nếu không có chỉ thị rõ ràng của con người; khi sửa phải nhắc người dùng rằng đây là nội dung đã chốt với khách hàng.
 8. **Ghi changelog gọn** ở cuối file khi cập nhật, để người review liếc qua là biết vừa thay đổi gì — nhưng **theo mốc quan trọng, không phải theo từng lần sửa**. Lịch sử/changelog trong tài liệu là bản ghi đánh dấu thay đổi đáng kể về nội dung hoặc quyết định (đổi một quy tắc, thêm/bỏ một mục lớn, hoàn tất một phiên bản); log chi tiết từng thay đổi đã có git đảm nhiệm — ghi cả hai nơi là thừa. AI không tự thêm dòng lịch sử cho các chỉnh sửa nhỏ (câu chữ, bổ sung lặt vặt).
 
-*(Instruction file mẫu cụ thể sẽ được soạn riêng — xem mục 10.)*
+*(Instruction file mẫu: `AGENTS-SystemDesign.md` và `docs/SystemDesign/AGENTS.md` trong repo này — cách áp dụng xem README ở root.)*
 
 ---
 
@@ -195,7 +194,7 @@ Nội dung chính của instruction file:
 ## 10. Việc sẽ làm tiếp
 
 - Soạn **bản rút gọn một trang** cho con người (từ mục 6) để phổ biến nhanh trong team.
-- Soạn **instruction file mẫu** (`AGENTS.md`, từ mục 8) đặt được ngay vào repo dự án.
+- ~~Soạn **instruction file mẫu** đặt được ngay vào repo dự án~~ — đã có: `AGENTS-SystemDesign.md` + `docs/SystemDesign/AGENTS.md` (mục 8).
 - **Chiều ngược repo → deliverable cho khách hàng** (ngoài phạm vi tài liệu này): hướng cơ bản đã định — AI sinh markdown, người duyệt và yêu cầu sửa, rồi convert sang docx/định dạng khách yêu cầu; sẽ quy ước chi tiết sau.
 - **Quy ước bản dịch** cho tài liệu repo khi cần ngôn ngữ khác (dự kiến: cùng thư mục, cùng tên, thêm hậu tố ngôn ngữ, ví dụ `basic-design.en.md`).
 - Template cụ thể: file spec (kèm dòng status), bản ghi quyết định (ADR gọn), mẫu "danh sách chỗ mờ" khi chuyển đổi.
@@ -211,3 +210,4 @@ Chỉ ghi **mốc thay đổi quan trọng** của tài liệu (đổi quy tắc
 | Ngày | Thay đổi |
 |------|----------|
 | 2026-08-17 | Khởi tạo bản đầy đủ: định nghĩa vấn đề, đối tượng (SE nắm dự án), triết lý, mô hình hai tầng tài liệu, quy tắc cho người / cho AI, quy ước vận hành (chuyển đổi theo sự kiện, kiểm tra ngược, status, ADR gọn), rủi ro |
+| 2026-09-09 | Mục 8: đổi mô hình đóng gói instruction file — bộ 2 file (`AGENTS-SystemDesign.md` adapter chỉ giữ hành vi luôn trực chiến + `docs/SystemDesign/AGENTS.md` tự đứng trọn vẹn), gắn vào `AGENTS.md` có sẵn của dự án bằng một dòng link. Lý do: dự án đích thường đã có hệ luật riêng, không trộn nội dung |
