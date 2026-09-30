@@ -16,15 +16,18 @@ Copy **2 file** sau vào repo dự án, giữ nguyên tên và đường dẫn:
 
 Rồi **nối vào hệ luật có sẵn của dự án** — thêm 1 dòng vào `AGENTS.md` của dự án (xem [AGENTS.md](AGENTS.md) của repo này làm ví dụ):
 
-> Đọc và tuân theo [AGENTS-SystemDesign.md](AGENTS-SystemDesign.md).
+> Đọc và tuân theo `@AGENTS-SystemDesign.md`
+
+(dùng cú pháp import `@` để Claude Code nạp adapter vào mọi phiên; tool khác coi đây là chỉ thị đọc file).
 
 Chuỗi nạp khi AI mở repo:
 
 ```mermaid
 flowchart TD
-    P1["CLAUDE.md<br/><i>(Claude Code)</i>"] --> A
-    P2[".cursor/rules/agents.mdc<br/><i>(Cursor)</i>"] --> A
-    A["<b>AGENTS.md</b><br/>file gốc CỦA DỰ ÁN — luật riêng + 1 dòng link"] --> B
+    T0["Claude Code (≥ v2.1.277) · Cursor bản mới · Codex"] -->|"tự đọc, không cần con trỏ"| A
+    P1["CLAUDE.md <i>(chỉ khi dự án đã có sẵn)</i><br/>thêm dòng import @AGENTS.md"] --> A
+    P2[".cursor/rules/agents.mdc<br/><i>(Cursor bản cũ)</i>"] --> A
+    A["<b>AGENTS.md</b><br/>file gốc CỦA DỰ ÁN — luật riêng + 1 dòng import"] --> B
     subgraph OUR["Bộ quy tắc copy từ repo này"]
         B["<b>AGENTS-SystemDesign.md</b><br/>adapter — 3 hành vi luôn trực chiến"] --> C
         C["<b>docs/SystemDesign/AGENTS.md</b><br/>toàn bộ luật vùng tài liệu — nạp khi cần"]
@@ -33,7 +36,7 @@ flowchart TD
 
 Tên file `AGENTS-SystemDesign.md` cố ý khác `AGENTS.md` để không đụng file sẵn có của dự án; nâng cấp quy ước sau này chỉ là copy đè 2 file, không đụng vào luật riêng của dự án.
 
-Dự án **chưa có** instruction file nào? — copy thêm [AGENTS.md](AGENTS.md) cùng các file con trỏ cho tool bạn dùng: [CLAUDE.md](CLAUDE.md) (Claude Code), [.cursor/rules/agents.mdc](.cursor/rules/agents.mdc) (Cursor).
+Dự án **chưa có** instruction file nào? — chỉ cần copy thêm [AGENTS.md](AGENTS.md): Claude Code (từ v2.1.277), Cursor bản mới, Codex… **tự đọc `AGENTS.md`**, không cần file con trỏ. Con trỏ chỉ cần trong hai trường hợp: dự án **đã có sẵn** `CLAUDE.md` (khi đó Claude Code bỏ qua `AGENTS.md` — thêm dòng import `@AGENTS.md` vào CLAUDE.md, xem [CLAUDE.md](CLAUDE.md) mẫu), hoặc dùng Cursor bản cũ ([.cursor/rules/agents.mdc](.cursor/rules/agents.mdc)).
 
 **Sau đó không cần chuẩn bị gì thêm:** khi bạn đưa tri thức spec đầu tiên cho AI, nó sẽ tự dựng khung `docs/SystemDesign/` (README index + các category cần thiết) theo quy tắc đã định — bạn chỉ bàn luận, cung cấp thông tin và review diff.
 
